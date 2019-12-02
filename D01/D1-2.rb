@@ -22,13 +22,9 @@ def module_fuel(mass)
   end
 end
 
-
 total_fuel = 0
-# stock = nil
 array.each do |f|
   @sum_fuel = 0
   total_fuel += module_fuel(f)
-#   total_fuel += mass_to_fuel(f.to_i)
 end
 puts total_fuel
-# puts stock
