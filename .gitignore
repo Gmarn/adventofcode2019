@@ -50,4 +50,4 @@ build-iPhoneSimulator/
 .rvmrc
 
 ## Input from day1
-/D01/input.txt
+/D**/input.txt
