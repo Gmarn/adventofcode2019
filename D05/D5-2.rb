@@ -24,7 +24,7 @@ def run_instruction(instruction, values)
       parameter_mode(instruction[2], values[0]) * parameter_mode(instruction[1], values[1])
   when 3
     prompt = gets
-    # prompt = 1
+    # prompt = 5
     @program[values[0]] = prompt.to_i
   when 4
     puts "Output: #{parameter_mode(instruction[2], values[0])}"
