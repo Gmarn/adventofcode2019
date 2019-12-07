@@ -3,8 +3,6 @@ file = File.read('input.txt')
 
 puts @knots[0]
 
-# puts "#{@program[0..3]}"
-
 def run_program(object, sum)
   orbits = @knots.select { |kn| kn[0] == object }
   puts "#{orbits}"
