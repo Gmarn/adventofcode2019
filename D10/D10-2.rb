@@ -31,7 +31,7 @@ def is_hide?(v, selected_vectors)
   false
 end
 
-def visible_count(array, coord) #, selected_vectors)
+def visible_count(array, coord)
   array.each_with_object([]) do |asteroid, acc|
     v = build_vector(coord, asteroid)
     acc << v unless is_hide?(v, acc)
@@ -56,10 +56,10 @@ end
 
 def separate_sector(coordinates)
   coordinates.each_with_object({ fourth: [], other: [] }) do |coordinate, acc|
-    if coordinate[:a] > Math::PI / 2
-      acc[:fourth] << coordinate
-    else
+    if coordinate[:a] <= (Math::PI / 2.0).round(5)
       acc[:other] << coordinate
+    else
+      acc[:fourth] << coordinate
     end
   end
 end
@@ -67,15 +67,17 @@ end
 def find_nexts(asteroids, counter)
   sorted_asteroids = asteroids.reject { |hsh| hsh[:a].nan? }.sort_by { |hsh| hsh[:a] }.reverse
   i = 0
-  while i < sorted_asteroids.length
-    j = 1
-    while sorted_asteroids[i] == sorted_asteroids[j] && j < sorted_asteroids.length
+  destroyed = 0
+  while i < sorted_asteroids.length - 1
+    j = i
+    while sorted_asteroids[i][:a] == sorted_asteroids[j][:a] && j < sorted_asteroids.length - 1
       j += 1
     end
-    i += j
-    return sorted_asteroids[i] if i >= counter
+    destroyed += 1
+    i = j
+    return sorted_asteroids[i] if destroyed >= counter
   end
-  return i
+  return destroyed
 end
 
 def restore_on_orignal_map(result, laser_coord)
@@ -95,4 +97,4 @@ end
 results = run_program(asteroid_map)
 laser_coord = results.sort_by { |hsh| hsh[:visible_asteroides] }[-1][:coord]
 result = run_laser(asteroid_map, laser_coord)
-puts result
+puts "result #{result}"
